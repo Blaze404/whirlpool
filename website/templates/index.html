@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Whirlpool services</title>
+
+
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    
+		<!-- toastr -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+		<!-- end toastr -->
+    
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    
+
+</head>
+<body>
+<div class="form-modal">
+
+    <div class="form-toggle">
+        <button id="login-toggle" onclick="toggleLogin()">log in</button>
+        <button id="signup-toggle" onclick="toggleSignup()">sign up</button>
+    </div>
+
+    <div id="login-form" >
+        <form action="/login/" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Enter phone or username"/>
+            <input type="password" name="password" placeholder="Enter password"/>
+            <button type="submit" class="btn login">login</button>
+            <!-- <p><a href="javascript:void(0)">Forgotten account</a></p> -->
+            <hr/>
+
+        </form>
+    </div>
+
+    <div id="signup-form">
+        <form action="/create_user/" method="POST" >
+            {% csrf_token %}
+            <input type="text" name="phone" placeholder="Enter your phone"/>
+            <input type="text" name="username" placeholder="Choose username"/>
+            <input type="password" name="password" placeholder="Create password"/>
+            <input type="password" name="password_confirm" placeholder="Confirm password"/>
+            <button type="submit" class="btn signup">create account</button>
+            <p>Clicking <strong>create account</strong> means that you are agree to our <a href="javascript:void(0)">terms of services</a>.</p>
+            <hr/>
+
+        </form>
+    </div>
+
+</div>
+
+
+    <script src="{% static 'index.js' %}"></script>
+
+    <script>
+        {% if display_message %}
+            {% if success %}
+                toastr.success("User account created successfully", "Try logging in")
+            {% else %}
+                toastr.error("{{message}}", "Something went wrong")
+            {% endif %}
+        {% endif %}
+
+    </script>
+
+</body>
+</html>
