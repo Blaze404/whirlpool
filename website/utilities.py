@@ -260,3 +260,18 @@ def get_part_numbers_wise_data():
         # print(part_number)
     print(data)
     return data
+
+
+def get_dashboard_context():
+    names = get_unique_inventory()
+    unique_part_names = get_unique_part_numbers()
+    groups = get_part_numbers_wise_data()
+    # print(groups)
+    default_part_number = unique_part_names[0]['part_number']
+    # print("groups:", json.dumps(groups))
+    default_options = groups[default_part_number]
+    context = {"names": names, 'part_numbers': unique_part_names,
+               'groups': groups, 'default_part_number': default_part_number
+        , 'default_options': default_options}
+    context['data'] = get_all_transactions()
+    return context

@@ -24,8 +24,7 @@ def login(request):
         context = ut.login_helper(request)
         # print(context)
         if context['success']:
-            context["names"] = ut.get_unique_inventory()
-            context['data'] = ut.get_all_transactions()
+            context = ut.get_dashboard_context()
             return render(request, 'dashboard.html', context)
         return render(request, 'index.html', context)
     return JsonResponse(C.unsupported_request_type(request.method))
@@ -34,17 +33,7 @@ def login(request):
 def dashboard(request):
     if request.method == 'GET':
         # context = ut.create_user_helper(request)
-        names = ut.get_unique_inventory()
-        unique_part_names = ut.get_unique_part_numbers()
-        groups = ut.get_part_numbers_wise_data()
-        # print(groups)
-        default_part_number = unique_part_names[0]['part_number']
-        # print("groups:", json.dumps(groups))
-        default_options = groups[default_part_number]
-        context = {"names": names, 'part_numbers': unique_part_names,
-                   'groups': groups, 'default_part_number': default_part_number
-                   ,'default_options': default_options}
-        context['data'] = ut.get_all_transactions()
+        context = ut.get_dashboard_context()
         return render(request, 'dashboard.html', context)
     return JsonResponse(C.unsupported_request_type(request.method))
 
@@ -85,20 +74,17 @@ def remove_inventory(request):
 
 def add_transaction(request):
     if request.method == 'POST':
-        context = ut.add_transaction(request)
-        context['data'] = ut.get_all_transactions()
-        context["names"] = ut.get_unique_inventory()
+        context = ut.get_dashboard_context()
         return render(request, 'dashboard.html', context)
     if request.method == 'GET':
+        context = ut.get_dashboard_context()
         return redirect("/dashboard/")
     return JsonResponse(C.unsupported_request_type(request.method))
 
 
 def return_inventory(request):
     if request.method == 'POST':
-        context = ut.return_inventory(request)
-        context['data'] = ut.get_all_transactions()
-        context["names"] = ut.get_unique_inventory()
+        context = ut.get_dashboard_context()
         return render(request, 'dashboard.html', context)
     if request.method == 'GET':
         return redirect("/dashboard/")
