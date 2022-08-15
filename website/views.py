@@ -3,6 +3,9 @@ from django.http import JsonResponse
 from . import constants as C
 from . import utilities as ut
 import json
+from django.views.decorators.csrf import csrf_exempt
+from . import default_reponses as res
+
 
 # Create your views here.
 def index(request):
@@ -42,7 +45,7 @@ def inventory(request):
     if request.method == 'GET':
         data = ut.get_inventory()
         names = ut.get_unique_inventory()
-        print(list(data.values()))
+        # print(list(data.values()))
         # ut.delete_transactions()
         context = {"data": data, "names": names}
         # context['data'] = ut.get_all_transactions()
@@ -94,3 +97,58 @@ def return_inventory(request):
 def show_all_users(request):
     return JsonResponse(ut.show_all_users_helper())
 
+
+@csrf_exempt
+def login_api(request):
+    if request.method == 'POST':
+        return JsonResponse(ut.login_api_helper(request))
+    return JsonResponse(res.wrong_api_call_response(request.method))
+
+
+
+@csrf_exempt
+def dashboard_api(request):
+    if request.method == 'GET':
+        return JsonResponse(ut.dashboard_api_helper())
+    return JsonResponse(res.wrong_api_call_response(request.method))
+
+
+@csrf_exempt
+def add_inventory_api(request):
+    if request.method == 'POST':
+        return JsonResponse(ut.add_inventory_api_helper(request))
+    return JsonResponse(res.wrong_api_call_response(request.method))
+
+
+@csrf_exempt
+def add_employee_api(request):
+    if request.method == 'POST':
+        return JsonResponse(ut.add_employee_api_helper(request))
+    return JsonResponse(res.wrong_api_call_response(request.method))
+
+@csrf_exempt
+def available_quantity_api(request):
+    if request.method == 'POST':
+        return JsonResponse(ut.available_quantity_api_helper(request))
+    return JsonResponse(res.wrong_api_call_response(request.method))
+
+
+@csrf_exempt
+def add_transaction_api(request):
+    if request.method == 'POST':
+        return JsonResponse(ut.add_transaction_api_helper(request))
+    return JsonResponse(res.wrong_api_call_response(request.method))
+
+
+@csrf_exempt
+def inventory_api(request):
+    if request.method == 'GET':
+        return JsonResponse(ut.inventory_api_helper(request))
+    return JsonResponse(res.wrong_api_call_response(request.method))
+
+
+@csrf_exempt
+def return_inventory_api(request):
+    if request.method == 'POST':
+        return JsonResponse(ut.return_inventory_api_helper(request))
+    return JsonResponse(res.wrong_api_call_response(request.method))

@@ -38,5 +38,15 @@ class Transactions(models.Model):
     part_number = models.CharField(max_length=512, default='')
 
 
+class Employee(models.Model):
+    employee_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128)
+    email = models.CharField(max_length=128)
+    mobile = models.CharField(max_length=16)
+    comment = models.CharField(max_length=512)
+    created_at = models.DateTimeField(auto_now=True)
+
+
+
 
 
