@@ -606,3 +606,36 @@ def return_inventory_api_helper(request):
                     return {"success": True, "message": str(e)}
 
     return {"success": False, "message": "something went wrong"}
+
+
+
+def create_user_api_helper(request):
+    data = json.loads(request.body)
+
+    phone = data.get("phone", "")
+    username = data.get("username", "")
+    password = data.get("password", "")
+    # item = data.get("item", "")
+
+    # phone = request.POST.get("phone", "")
+    # username = request.POST.get("username", "")
+    # password = request.POST.get("password", "")
+    if phone == "" or username == "" or password == "":
+        context = {"success": False, "message": "Username or password or phone is empty", "display_message": True}
+        return context
+    qs = User.objects.filter(username=username)
+    if len(qs) >= 1:
+        context = {"success": False, "message": "Username already taken try different", "display_message": True}
+        return context
+    user = User()
+    user.username = username
+    user.password = password
+    user.phone = phone
+    user.user_type = "admin"
+    user.created_by = "admin"
+    try:
+        user.save()
+        context = {"success": True, "message": "ok", "display_message": True}
+    except Exception as e:
+        context = {"success": False, "message": str(e), "display_message": True}
+    return context

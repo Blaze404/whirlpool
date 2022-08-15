@@ -152,3 +152,10 @@ def return_inventory_api(request):
     if request.method == 'POST':
         return JsonResponse(ut.return_inventory_api_helper(request))
     return JsonResponse(res.wrong_api_call_response(request.method))
+
+
+@csrf_exempt
+def create_user_api(request):
+    if request.method == 'POST':
+        return JsonResponse(ut.create_user_api_helper(request))
+    return JsonResponse(res.wrong_api_call_response(request.method))

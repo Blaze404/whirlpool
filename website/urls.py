@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/available_quantity/', views.available_quantity_api, name='available_quantity_api'),
     path('api/add_transaction/', views.add_transaction_api, name='add_transaction'),
     path('api/inventory/', views.inventory_api, name='inventory_api'),
-    path('api/return_inventory/', views.return_inventory_api, name='return_inventory_api')
+    path('api/return_inventory/', views.return_inventory_api, name='return_inventory_api'),
+    path('api/create_user/', views.create_user_api, name='create_user_api')
 ]
