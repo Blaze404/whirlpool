@@ -2,3 +2,5 @@ django
 requests
 whitenoise
 django-cors-headers
+setuptools
+pymysql
