@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)uab_w7kk$i49wj1ja0v5hzm=lx&a+5_=!06635e#pucnvt+zi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,9 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website.apps.WebsiteConfig',
-    'corsheaders',
-    "sslserver",
-
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'whirlpool.urls'
@@ -92,8 +91,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'whirlpool',
-        'USER': 'djangouser',
-        'PASSWORD': 'devyani'
+        'USER': 'djangouser2',
+        'PASSWORD': 'devyani',
+        'HOST': '172.105.252.13',
+        'PORT': '3306'
     }
 }
 
@@ -131,12 +132,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/django-project/site/public/static'
-#
-MEDIA_ROOT = '/django-project/site/public/media'
+# STATIC_URL = '/static/'
+# STATIC_ROOT = '/django-project/site/public/static'
+# #
+# MEDIA_ROOT = '/django-project/site/public/media'
 # MEDIA_URL = '/media/'
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 # Default primary key field type
