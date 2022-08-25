@@ -4,3 +4,4 @@ whitenoise
 django-cors-headers
 setuptools
 pymysql
+mysqlclient
